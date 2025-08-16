@@ -1,0 +1,715 @@
+{
+  "name": "Cold Email",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1168,
+        -80
+      ],
+      "id": "99f15deb-8be4-4a98-9992-e30fdf57a952",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cea9ec35-3782-4037-822e-7ca07cb4be55",
+              "name": "Biz Email",
+              "value": "={{ $('Get row(s) in sheet').item.json['Biz Email'] }}",
+              "type": "string"
+            },
+            {
+              "id": "b29c48ad-3ebf-4a18-b365-3ef00d27ffb5",
+              "name": "Subject",
+              "value": "={{ $('Get row(s) in sheet').first().json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "3a9e651d-35db-4e68-acd4-330211d8b838",
+              "name": "Script",
+              "value": "={{ $('Get row(s) in sheet').first().json.Script }}",
+              "type": "string"
+            },
+            {
+              "id": "baa38f39-ab0b-45f5-b570-31af721f2be5",
+              "name": "Email Account",
+              "value": "={{ $json['Email Account'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -720,
+        -80
+      ],
+      "id": "966d0afc-415e-4dc3-8b8f-aad1b317042d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -496,
+        -80
+      ],
+      "id": "215d7c69-3833-405f-8bd0-22229aec55a6",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8e5dfcdf-c939-4f7f-a6e1-a33ded5f1e14",
+              "name": "Biz Email",
+              "value": "={{ $json['Biz Email'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d6199bf3-2abb-4869-ae26-9956511f46d1",
+              "name": "Subject",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "6f4c7920-faa6-4f5f-a680-1853f05c35db",
+              "name": "Script",
+              "value": "={{ $json.Script }}",
+              "type": "string"
+            },
+            {
+              "id": "5a1af0aa-b335-4b30-917e-7e519d2050df",
+              "name": "Email Account",
+              "value": "={{ $json['Email Account'] }}",
+              "type": "string"
+            },
+            {
+              "id": "436b5324-e41a-414b-ae25-7b3049879557",
+              "name": "Random Num",
+              "value": "={{ Math.floor(Math.random() * (7 - 2 + 1)) + 2 }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        -64
+      ],
+      "id": "1791b9cc-2ed1-47c7-8dd7-02a35cfc06e0",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Edit Fields1').item.json['Email Account'] }}",
+                    "rightValue": "Ankit young",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0409a868-9d3f-4029-b0ff-9269acbf9ce5"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "022d0db9-6ba8-43f4-a9db-fcf078586f99",
+                    "leftValue": "={{ $('Edit Fields1').item.json['Email Account'] }}",
+                    "rightValue": "Ankit old",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "51868102-1d13-439e-9c60-6478915f75af",
+                    "leftValue": "={{ $('Edit Fields1').item.json['Email Account'] }}",
+                    "rightValue": "ethan carter",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f7117969-59c8-43a2-9a50-605f154b941f",
+                    "leftValue": "={{ $json['Email Account'] }}",
+                    "rightValue": "Mason",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -256,
+        160
+      ],
+      "id": "e84fbd63-1186-4764-923d-c1064a670958",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json['Random Num'] }}",
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -464,
+        192
+      ],
+      "id": "944e5ff5-1e32-47fd-82ff-d94bce5b6099",
+      "name": "Wait1",
+      "webhookId": "117966d8-d85c-4938-82f3-8ea993b58d54"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE",
+          "mode": "list",
+          "cachedResultName": "Solar Leads | Website (Mid)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 606376511,
+          "mode": "list",
+          "cachedResultName": "EMAILS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit#gid=606376511"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Used By",
+              "lookupValue": "Ankit"
+            },
+            {
+              "lookupColumn": "Sent",
+              "lookupValue": "No"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -944,
+        -80
+      ],
+      "id": "38ce7024-7e24-4f9c-99a6-c3c5f24035b8",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7tJeqHDw2b8mrnaG",
+          "name": "Ankittalks gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE",
+          "mode": "list",
+          "cachedResultName": "Solar Leads | Website (Mid)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 606376511,
+          "mode": "list",
+          "cachedResultName": "EMAILS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit#gid=606376511"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Biz Email": "={{ $('Switch').item.json['Biz Email'] }}",
+            "Sent": "Yes"
+          },
+          "matchingColumns": [
+            "Biz Email"
+          ],
+          "schema": [
+            {
+              "id": "Total:",
+              "displayName": "Total:",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Used By",
+              "displayName": "Used By",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email Account",
+              "displayName": "Email Account",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Sent",
+              "displayName": "Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Business",
+              "displayName": "Business",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Biz Email",
+              "displayName": "Biz Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Loaction",
+              "displayName": "Loaction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company info",
+              "displayName": "Company info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Website",
+              "displayName": "Website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Script",
+              "displayName": "Script",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        368,
+        272
+      ],
+      "id": "b893ea75-a473-467f-bf5f-3380acd10f35",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7tJeqHDw2b8mrnaG",
+          "name": "Ankittalks gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\nAnkit Rai\nCo-Founder\nRapple Media\n\nEmail: ankit.rapplemedia@gmail.com\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        -96
+      ],
+      "id": "bf49413e-f9ad-4e54-be09-150b58236715",
+      "name": "Send a message",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "U0kr3shlggFawFTV",
+          "name": "Ankit Young Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\n\nAnkit Rai\nCo-founder\nRapple Media\n\nEmail:ankitrai.rapplemedia@gmail.com",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        96
+      ],
+      "id": "1c68ea39-7aaa-45cb-bc59-827cde624f93",
+      "name": "Send a message1",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "23UHncri7AT3FBJi",
+          "name": "Ankit old gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\n\nEthan Carter\nMarketing Head\nRapple Media\n\nEmail: ethancarterreads@gmail.com",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        288
+      ],
+      "id": "fc127696-74c5-4808-a79f-2f96ad8f6bcb",
+      "name": "Send a message2",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7XstEbqau2OCFhJs",
+          "name": "Ethan Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\n\nMason Reed\nMarketing Head\nRapple Media\n\nEmail : masonreedtalks@gmail.com",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        480
+      ],
+      "id": "8595661f-a848-485b-b67f-26237fe443ed",
+      "name": "Send a message3",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "z0FoYMI05D4VNRNF",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "71b15a66-ab91-47e4-876d-d76df9ac2f22",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2d51fbac73dffb97fa215b06a7531a6d4a88cd7dd5b1cfb3f019229532f8d932"
+  },
+  "id": "W6c38pYAwattKHJN",
+  "tags": []
+}
