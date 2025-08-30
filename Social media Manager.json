@@ -1,0 +1,1108 @@
+{
+  "name": "Reels/Shorts Posting",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo",
+          "mode": "list",
+          "cachedResultName": "N8N For Social Media",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 214306975,
+          "mode": "list",
+          "cachedResultName": "YT/Insta Shorts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit#gid=214306975"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status ": "posted",
+            "row_number": "={{ $('Google Sheets').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Gdrive ID",
+              "displayName": "Gdrive ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status ",
+              "displayName": "Status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -416,
+        688
+      ],
+      "id": "85b74fcd-364e-4b24-a799-028a66089e74",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "N8n X Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo",
+          "mode": "list",
+          "cachedResultName": "N8N For Social Media",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 214306975,
+          "mode": "list",
+          "cachedResultName": "YT/Insta Shorts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit#gid=214306975"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status ",
+              "lookupValue": "post"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1680,
+        400
+      ],
+      "id": "ea53cd05-b710-4809-9e51-d2face8e5dca",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "N8n X Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.Name }}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1456,
+        400
+      ],
+      "id": "9bdfcf73-8083-4b57-ade0-b1ba500ecf50",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "J8HSIhpLwvnCqkjd",
+          "name": "N8n X Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Google Drive').item.json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -688,
+        688
+      ],
+      "id": "f190f1e2-aace-4f0b-9c12-e21dcdf10db0",
+      "name": "Google Drive3",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "J8HSIhpLwvnCqkjd",
+          "name": "N8n X Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appWxpbrFlXDIUqMf",
+          "mode": "list",
+          "cachedResultName": "Insta By  passer",
+          "cachedResultUrl": "https://airtable.com/appWxpbrFlXDIUqMf"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblfOrUoo7ypuMzy5",
+          "mode": "list",
+          "cachedResultName": "Insta Ankit",
+          "cachedResultUrl": "https://airtable.com/appWxpbrFlXDIUqMf/tblfOrUoo7ypuMzy5"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Google Sheets').item.json.Name }}",
+            "URL": "={{ $('Edit Fields').item.json.id }}",
+            "Caption": "={{ $('Google Sheets').item.json.Caption }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -464,
+        144
+      ],
+      "id": "d3f111b8-c51f-4d12-adbc-a356c7173ee7",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "naXmGRrHgy7Fokxn",
+          "name": "N8N x Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Google Sheets').item.json.Title }}",
+        "regionCode": "IN",
+        "categoryId": "=27",
+        "options": {
+          "privacyStatus": "public"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        -704,
+        144
+      ],
+      "id": "7728c101-eb6c-4d78-81f2-0b5d8e5dbef1",
+      "name": "YouTube1",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "efrpG72KZGkbt45C",
+          "name": "N8n X YT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Google Drive').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -944,
+        144
+      ],
+      "id": "029d05cd-62e2-4aa1-91cf-ba465e5ae814",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "J8HSIhpLwvnCqkjd",
+          "name": "N8n X Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9000ffd-5c60-4a5e-bf0f-a66a205f1d8a",
+              "name": "id",
+              "value": "=https://drive.google.com/uc?id={{ $json.id }}&export=download",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1264,
+        400
+      ],
+      "id": "5e75bca2-2d07-4349-bfd7-6ddb0b60d7a9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "17841460144744883",
+        "edge": "media_publish",
+        "allowUnauthorizedCerts": true,
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        432
+      ],
+      "id": "eab47b5d-b451-4b98-845a-a69f48cbc23e",
+      "name": "Intsa Publisher",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "2c3JjlnmrduQIgLj",
+          "name": "N8N x Meta 1"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -704,
+        432
+      ],
+      "id": "b326edf8-dbc4-478e-8ea8-025175796014",
+      "name": "Wait",
+      "webhookId": "a047c6c1-7566-4ebb-95af-28a1984382b2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19bb85f3-d128-40d5-b35c-acb38a4f9c30",
+              "name": "caption",
+              "value": "O my godzilla",
+              "type": "string"
+            },
+            {
+              "id": "eed0ff19-a095-4c43-b893-cd2e189a3cbb",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        3408
+      ],
+      "id": "1062ae47-5c8e-497c-8b1b-5634985e3a44",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "17841460144744883",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "media_type",
+                "value": "REELS"
+              },
+              {
+                "name": "caption",
+                "value": "={{ $('Google Sheets').item.json.Caption }}"
+              },
+              {
+                "name": "video_url",
+                "value": "={{ $json.fields.URL }}"
+              },
+              {
+                "name": "share_to_feed ",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        3408
+      ],
+      "id": "27ede9d3-f2a2-4a43-90ce-07bb475549ab",
+      "name": "Container1",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "2c3JjlnmrduQIgLj",
+          "name": "N8N x Meta 1"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "17841460144744883",
+        "edge": "media_publish",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        208,
+        3408
+      ],
+      "id": "1665fb5b-aaa3-4681-b12e-ae01dca7d22e",
+      "name": "Intsa Publisher1",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "2c3JjlnmrduQIgLj",
+          "name": "N8N x Meta 1"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -48,
+        3408
+      ],
+      "id": "1dc35cba-d717-4d6e-9c10-d0ddf16e7d93",
+      "name": "Wait1",
+      "webhookId": "a047c6c1-7566-4ebb-95af-28a1984382b2"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 19
+            },
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2000,
+        400
+      ],
+      "id": "c70b1976-d2f9-487a-8dc8-c1e60f800254",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "Posted shorts",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1-0f5IZIGDtnQxZArvdux754NiaMg5XJY",
+            "mode": "list",
+            "cachedResultName": "Reels video Done",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1-0f5IZIGDtnQxZArvdux754NiaMg5XJY"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -944,
+        688
+      ],
+      "id": "823f57b8-f043-44ed-aec3-bedb4e27745e",
+      "name": "Google Drive2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "J8HSIhpLwvnCqkjd",
+          "name": "N8n X Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "17841460144744883",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "media_type",
+                "value": "REELS"
+              },
+              {
+                "name": "caption",
+                "value": "={{ $json.fields.Caption }}"
+              },
+              {
+                "name": "video_url",
+                "value": "={{ $json.fields.URL }}"
+              },
+              {
+                "name": "share_to_feed ",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        432
+      ],
+      "id": "a74db735-4a81-4e7a-b09b-04422f7bda69",
+      "name": "Insta Container",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "2c3JjlnmrduQIgLj",
+          "name": "N8N x Meta 1"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "e6090801-2a22-4627-8a44-e6b29c9b8ef9",
+              "leftValue": "={{ $json['Gdrive ID'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "6577c681-9391-4334-bf61-33344cf6535b",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        -1392,
+        1056
+      ],
+      "notesInFlow": true,
+      "typeVersion": 2,
+      "notes": "Only process rows which have empty processed_at field"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "me",
+        "edge": "photos",
+        "sendBinaryData": true,
+        "binaryPropertyName": "data",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "message",
+                "value": "={{ $('Google Sheets2').item.json.Post }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        912
+      ],
+      "id": "df2b2fbe-5cbe-427f-be77-0b915d6ffa16",
+      "name": "Facebook Graph API",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "kcx7AUET237u52vs",
+          "name": "N8n X Fb"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://drive.google.com/uc?export=download&id={{ $json['Gdrive ID'] }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1136,
+        1056
+      ],
+      "id": "05d95c69-77e6-4378-8563-a5d7130dde7e",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "person": "prsCGctp8n",
+        "text": "={{ $json.Post }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        1120
+      ],
+      "id": "b859a802-4262-4ecd-bb87-48d7078d68cd",
+      "name": "LinkedIn",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "F3a8BcrHq6Hf5Ubl",
+          "name": "N8n x Lnkdn"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo",
+          "mode": "list",
+          "cachedResultName": "N8N For Social Media",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1480046470,
+          "mode": "list",
+          "cachedResultName": "Lindin/Fb ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit#gid=1480046470"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Ready"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1632,
+        1056
+      ],
+      "id": "51d4625e-9c23-4a32-85e2-be7d8d1fde12",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "N8n X Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo",
+          "mode": "list",
+          "cachedResultName": "N8N For Social Media",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1480046470,
+          "mode": "list",
+          "cachedResultName": "Lindin/Fb ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZnDOIG8d3GhgCsqZVwF1shClscODSYvz5CJ-ZZPrXLo/edit#gid=1480046470"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Gdrive ID": "={{ $('Google Sheets2').item.json['Gdrive ID'] }}",
+            "Status": "Posted"
+          },
+          "matchingColumns": [
+            "Gdrive ID"
+          ],
+          "schema": [
+            {
+              "id": "Post",
+              "displayName": "Post",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Gdrive ID",
+              "displayName": "Gdrive ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -544,
+        1120
+      ],
+      "id": "c8d68dfa-2802-44c6-9036-88009301e5c9",
+      "name": "Google Sheets3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "N8n X Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 19
+            },
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1968,
+        1056
+      ],
+      "id": "8aa8f6af-e09b-49b5-a1fa-8213553917a3",
+      "name": "Schedule Trigger1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets1": {
+      "main": [
+        []
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Insta Container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "YouTube1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube1": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intsa Publisher": {
+      "main": [
+        [
+          {
+            "node": "Google Drive2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Intsa Publisher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Container1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Intsa Publisher1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Container1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive2": {
+      "main": [
+        [
+          {
+            "node": "Google Drive3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insta Container": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Facebook Graph API",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a8005dd7-751b-46bd-a4cd-8952ba039285",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "77f1d8375380ee2bc4995763b4e39528bf040d446fc3e9e5f6d802ec19784049"
+  },
+  "id": "88NZiqdKWxP3fNEo",
+  "tags": []
+}
