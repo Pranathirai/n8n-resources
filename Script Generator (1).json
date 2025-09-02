@@ -1,0 +1,409 @@
+{
+  "name": "Script Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -496,
+        -368
+      ],
+      "id": "619e6f80-7f51-4bda-9958-69b1750ef896",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1CUeOy5TKo9bSPKgQPgzZwCXUfct_qNr8szAuAJDN-uI",
+          "mode": "list",
+          "cachedResultName": "AI video Gneration",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CUeOy5TKo9bSPKgQPgzZwCXUfct_qNr8szAuAJDN-uI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Status sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CUeOy5TKo9bSPKgQPgzZwCXUfct_qNr8szAuAJDN-uI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Generate script"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -240,
+        -224
+      ],
+      "id": "48841b94-f9b8-40af-9e28-77b62953ede5",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "N8n X Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert content creator who specializes in making engaging, high-retention, Varun Mayya–style reel scripts.  \nYour job is to take the inputs below, do additional research using the search tool, and produce a script that feels conversational, punchy, insightful, and storytelling-driven.\n\nInputs you will receive:\n- Topic: {{ $json.Topic }}\n- My Insight / Opinion: {{ $json['My insights'] }}\n\nInstructions:\n1. Use the provided topic and my personal insight as the foundation.  \n2. Call the SEARCH TOOL to gather **extra insights, facts, or stats** about the topic that make the reel more valuable.  \n3. Structure the script (~40–60 seconds of spoken content):\n   - **Hook:** Start with a bold statement, surprising fact, or contrarian take.  \n   - **Story/Scenario:** Illustrate the point with a mini-story, analogy, or “imagine this…” style example. Make it visual so the listener can picture it.  \n   - **Insight:** Seamlessly bring in my personal opinion/insight, as if I’m giving unique perspective.  \n   - **Support:** Add 1–2 researched nuggets (stats, real examples, or simple metaphors) to make it credible.  \n   - **Takeaway:** End with a clear, memorable punchline or takeaway that sparks curiosity or sharing.  \n\nStyle Guidelines:\n- Script must sound like a smart, relatable friend explaining an idea.  \n- Storytelling is mandatory: always add a scenario, analogy, or mini-story to explain the concept.  \n- No AI jargon. No robotic tone.  \n- Short, conversational, punchy. Easy to say out loud.  \n- Skip filler like “In this video…” → jump straight into the hook.  \n- Make it engaging for Reels: sharp, thought-leadership vibe, easy to remember.  \n\nOutput:\n- Provide only the final script with no labels, no explanations, and no extra text.  \n- Do not include error messages or meta notes.  \n- The output must be strictly the script as it would be spoken in the video.  \n",
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        -224
+      ],
+      "id": "f991c237-be5e-4a9b-b07f-bf4ef4a8aa0e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', ``, 'string') }}"
+            }
+          ]
+        },
+        "simplify": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify_Output', ``, 'boolean') }}",
+        "options": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a42a66f3-dc65-4ad3-a2b3-1b8c88ef3972",
+      "name": "Message a model in Perplexity",
+      "credentials": {
+        "perplexityApi": {
+          "id": "4kByFArGHU08vHxN",
+          "name": "Perplexity account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1CUeOy5TKo9bSPKgQPgzZwCXUfct_qNr8szAuAJDN-uI",
+          "mode": "list",
+          "cachedResultName": "AI video Gneration",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CUeOy5TKo9bSPKgQPgzZwCXUfct_qNr8szAuAJDN-uI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Status sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CUeOy5TKo9bSPKgQPgzZwCXUfct_qNr8szAuAJDN-uI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number }}",
+            "Script": "={{ $json.output }}",
+            "Status": "Script Generated"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "My insights",
+              "displayName": "My insights",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Avatar Name",
+              "displayName": "Avatar Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Avatar ID",
+              "displayName": "Avatar ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Script",
+              "displayName": "Script",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Audio URL",
+              "displayName": "Audio URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Video URL",
+              "displayName": "Video URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        -224
+      ],
+      "id": "747506b6-9d20-48c5-ab28-2923f855367f",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "N8n X Google"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        -96
+      ],
+      "id": "c35b16f8-cf8b-451d-9706-7c4de23e3268",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -160,
+        16
+      ],
+      "id": "076a62dc-69e6-479e-acb9-71f757738337",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pq6Ws7AZsv9Fq3OF",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-20250514",
+          "cachedResultName": "Claude 4 Sonnet"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        16
+      ],
+      "id": "c00852ad-efd3-4b13-89b6-f2a67ce524b2",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "HL7OgE8BWyZcYDd1",
+          "name": "Anthropic account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model in Perplexity": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4918a09e-5e45-4f3b-885e-a1179fbdb50a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "77f1d8375380ee2bc4995763b4e39528bf040d446fc3e9e5f6d802ec19784049"
+  },
+  "id": "cLVjQRroLirLndu3",
+  "tags": []
+}
