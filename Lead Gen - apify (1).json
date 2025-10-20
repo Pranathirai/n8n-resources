@@ -1,0 +1,3224 @@
+{
+  "name": "Lead Gen - apify",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.instantly.ai/api/v2/leads/add",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer Your APi KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"campaign_id\": \"Your Campaign Id\",\n  \"leads\": [\n    {\n      \"email\": \"{{ $json.email }}\",\n      \"firstName\": \"{{ $json.firstName }}\",\n      \"lastName\": \"{{ $json.lastName }}\",\n      \"companyName\": \"{{ $json.organizationName }}\",\n      \"customFields\": {\n        \"city\": \"{{ $json.city }}\",\n        \"state\": \"{{ $json.state }}\"\n      }\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        256,
+        2064
+      ],
+      "id": "66c1fedc-b221-4c5d-ad74-4458666f631d",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1661841420,
+          "mode": "list",
+          "cachedResultName": "icp",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1661841420"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email status",
+              "lookupValue": "safe"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        16,
+        2272
+      ],
+      "id": "caec8653-a832-47b3-826f-5caee4d53052",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 675359165,
+          "mode": "list",
+          "cachedResultName": "Sent to instantly",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=675359165"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "firstName": "={{ $('Get row(s) in sheet').item.json.firstName }}",
+            "lastName": "={{ $('Get row(s) in sheet').item.json.lastName }}",
+            "position": "={{ $('Get row(s) in sheet').item.json.position }}",
+            "linkedinUrl": "={{ $('Get row(s) in sheet').item.json.linkedinUrl }}",
+            "seniority": "={{ $('Get row(s) in sheet').item.json.seniority }}",
+            "functional": "={{ $('Get row(s) in sheet').item.json.functional }}",
+            "email": "={{ $('Get row(s) in sheet').item.json.email }}",
+            "city": "={{ $('Get row(s) in sheet').item.json.city }}",
+            "state": "={{ $('Get row(s) in sheet').item.json.state }}",
+            "country": "={{ $('Get row(s) in sheet').item.json.country }}",
+            "organizationName": "={{ $('Get row(s) in sheet').item.json.organizationName }}",
+            "organizationDescription": "={{ $('Get row(s) in sheet').item.json.organizationDescription }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        496,
+        2256
+      ],
+      "id": "472b8a82-39d9-4909-9c01-4a4cf211769b",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 3,
+              "triggerAtHour": 18,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        80
+      ],
+      "id": "b769b90c-fdcb-43cc-bcd0-8dffd9296e22",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 3,
+              "triggerAtHour": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -224,
+        2080
+      ],
+      "id": "96b4d564-49eb-4b8f-90c3-3d6421c98179",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 3,
+              "triggerAtHour": 19
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -640,
+        464
+      ],
+      "id": "b54c5604-c053-4365-9dc1-5d28fb537df2",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -128,
+        464
+      ],
+      "id": "80e646b4-eef4-4057-bfed-a48c69744f34",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Organization description : {{ $json.organizationDescription }}\n\nCompany website : {{ $json.organizationWebsite }}\n\nLinkedIn profile of the decision-maker : {{ $json.linkedinUrl }}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=You are a marketing assistant that helps identify if a decision-maker is a good fit for a digital marketing and automation agency.\n\nThe user will provide:\n\nOrganization description\n\nCompany website\n\nLinkedIn profile of the decision-maker\n\nYour task:\n\nDecide if the person is an ideal or not ideal client for marketing automation, funnel building, or AI agent setup services.\n\nWrite a short icebreaker that sounds natural and personal.\n\nKeep it under 25 words.\n\nMention something real or specific about their company or role.\n\nAvoid hype, flattery, or generic compliments.\n\nIf any info is incomplete or unclear, use what’s available but do not assume or make up details.\n\nTone guide:\n\nGood: “Noticed your company focuses on lead generation tools—looks like a great space to automate parts of the sales process.”\n\nGood: “Saw your recent post on scaling outreach—looks like you’re focused on improving lead flow.”\n\nBad: “You’re doing amazing work revolutionizing the industry!”\n\nBad: “I’m so inspired by your journey, truly outstanding!”\n\nYou must respond in raw JSON only.\nDo not include code blocks, markdown, explanations, or extra text.\n\n\nResponse rules (strict):\n\nOutput must be a valid JSON array only.\n\nDo not include markdown, code blocks, backticks, or extra text.\n\nDo not write explanations or any other content.\n\nIf the client is Not ideal donot genarte the icebreaker, keep it \"NA'\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        160,
+        480
+      ],
+      "id": "d88ab71e-e8a5-4f21-a336-fc5152407d8d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "[\n{\n\"Client\": \"Ideal\",\n\"Icebreaker\": \"Saw your company focuses on simplifying real estate deals—automation could help you scale client onboarding easily.\"\n}\n]"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        672
+      ],
+      "id": "997086ee-a5c1-443f-acb5-2841ec74b13b",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dc4f1e4f-c3c2-48d9-8520-c04ab6914300",
+              "leftValue": "={{ $json.output[0].Client }}",
+              "rightValue": "Ideal",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "9215fa0d-5f13-4a53-b983-e66210756987",
+              "leftValue": "={{ $json.output[0].Client }}",
+              "rightValue": "Ideal Client",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "d639be5c-fadc-4355-b632-c3e74d8679eb",
+              "leftValue": "={{ $json.output[0].Client }}",
+              "rightValue": "ideal",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        544,
+        480
+      ],
+      "id": "6a8735b6-454e-45cb-ab6b-b8c231b0b7ae",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        576,
+        1264
+      ],
+      "id": "c72fc46d-36bf-4f57-8479-ce7f9979de57",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c71ab82b-fef3-48f7-999f-7b0ca0cfbe06",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "string"
+            },
+            {
+              "id": "cd25916d-1c57-49c5-8bcb-3e1a558cdb1e",
+              "name": "Email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "107a03df-450e-4d4d-ae8a-52fb674beb38",
+              "name": "Key",
+              "value": "API key for reoon",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        1264
+      ],
+      "id": "db1c2926-c062-4ccf-9ed6-5042033f7e8c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1661841420,
+          "mode": "list",
+          "cachedResultName": "icp",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1661841420"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email status",
+              "lookupValue": "New"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        112,
+        1264
+      ],
+      "id": "d630ce7a-39ff-41ac-b2eb-7b2c1179eb01",
+      "name": "Google Sheets5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1661841420,
+          "mode": "list",
+          "cachedResultName": "icp",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1661841420"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Loop Over Items1').item.json.row_number }}",
+            "Email status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email status",
+              "displayName": "Email status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        768,
+        1680
+      ],
+      "id": "5365e053-7d4c-4b45-a16d-efaa94af148d",
+      "name": "Google Sheets7",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "784b4f97-a497-464c-8e5c-9fef33d16b79",
+              "name": "Email 1",
+              "value": "={{ $json['Email'] }}",
+              "type": "string"
+            },
+            {
+              "id": "57927afb-eb1e-442e-bda4-faf43cda8631",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -160,
+        1568
+      ],
+      "id": "f8820ee8-1ab9-451e-9c38-41c9be4eb908",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1661841420,
+          "mode": "list",
+          "cachedResultName": "icp",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1661841420"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Loop Over Items1').item.json.row_number }}",
+            "Email status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email status",
+              "displayName": "Email status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        768,
+        1440
+      ],
+      "id": "5eabeb91-cc6d-40ac-8f71-0f2fb415b1ed",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ca910321-414b-4eb2-8dc1-743ebc94aaab",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "=safe",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        1568
+      ],
+      "id": "732b9e70-a711-45cf-89e4-6707456e9cb7",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "url": "=https://emailverifier.reoon.com/api/v1/verify?email={{ $json['Email 1'] }}&key={{ $('Edit Fields').item.json.Key }}&mode=power",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        112,
+        1568
+      ],
+      "id": "dd9ac68b-435a-4bc7-afc0-614e0979e84a",
+      "name": "quick Reoon verifier "
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 3,
+              "triggerAtHour": 19,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -160,
+        1264
+      ],
+      "id": "aab55f02-0a18-4d99-be93-b5776a5ec9d3",
+      "name": "Schedule Trigger3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1661841420,
+          "mode": "list",
+          "cachedResultName": "icp",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1661841420"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "firstName": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.firstName }}",
+            "lastName": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.lastName }}",
+            "position": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.position }}",
+            "linkedinUrl": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.linkedinUrl }}",
+            "seniority": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.seniority }}",
+            "functional": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.functional }}",
+            "email": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.email }}",
+            "city": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.city }}",
+            "country": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.country }}",
+            "state": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.state }}",
+            "organizationName": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.organizationName }}",
+            "organizationDescription": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.organizationDescription }}",
+            "organizationCity": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.organizationCity }}",
+            "Email status": "=New"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email status",
+              "displayName": "Email status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        816,
+        528
+      ],
+      "id": "8298a587-5c47-4401-96ae-b92888b6d038",
+      "name": "ICP sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1926771343,
+          "mode": "list",
+          "cachedResultName": "Target Market",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1926771343"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Scrape"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        -48
+      ],
+      "id": "caadd071-7898-4116-88f6-f7fd289e0524",
+      "name": "target Market - Get rows",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Apify Raw",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "firstName": "={{ $json.firstName }}",
+            "lastName": "={{ $json.lastName }}",
+            "fullName": "={{ $json.fullName }}",
+            "position": "={{ $json.position }}",
+            "linkedinUrl": "={{ $json.linkedinUrl }}",
+            "seniority": "={{ $json.seniority }}",
+            "functional": "={{ $json.functional }}",
+            "email": "={{ $json.email }}",
+            "organizationName": "={{ $json.organization.name }}",
+            "organizationWebsite": "={{ $json.organization.website }}",
+            "organizationLinkedinUrl": "={{ $json.organization.linkedinUrl }}",
+            "organizationFoundedYear": "={{ $json.organization.foundedYear }}",
+            "organizationIndustry": "={{ $json.organization.industry }}",
+            "organizationSize": "={{ $json.organization.size }}",
+            "organizationDescription": "={{ $json.organization.description }}",
+            "organizationCity": "={{ $json.organizationCity }}",
+            "organizationState": "={{ $json.organizationState }}",
+            "city": "={{ $json.city }}",
+            "state": "={{ $json.state }}",
+            "country": "={{ $json.country }}",
+            "organizationCountry": "={{ $json.organizationCountry }}",
+            "Status": "New"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationWebsite",
+              "displayName": "organizationWebsite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationLinkedinUrl",
+              "displayName": "organizationLinkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationFoundedYear",
+              "displayName": "organizationFoundedYear",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationIndustry",
+              "displayName": "organizationIndustry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationSize",
+              "displayName": "organizationSize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationState",
+              "displayName": "organizationState",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizationCountry",
+              "displayName": "organizationCountry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        464,
+        -48
+      ],
+      "id": "2689d6d1-8e32-48b6-ab81-a840a2a74194",
+      "name": "Apify Rawe - Append row",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1926771343,
+          "mode": "list",
+          "cachedResultName": "Target Market",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1926771343"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number }}",
+            "Status": "Sorted"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Target Country",
+              "displayName": "Target Country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Target state",
+              "displayName": "Target state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Target Industry",
+              "displayName": "Target Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        720,
+        64
+      ],
+      "id": "0cbff6dd-f4aa-4c40-9859-c84fd50469ea",
+      "name": "Target Market Update status",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Apify Raw",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "New"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -368,
+        464
+      ],
+      "id": "0732a4f9-1766-4383-a7c9-cb7aaa2f1cbb",
+      "name": "Apify Raw - Get row(s) in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Apify Raw",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Ideal",
+            "row_number": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationWebsite",
+              "displayName": "organizationWebsite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationLinkedinUrl",
+              "displayName": "organizationLinkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationFoundedYear",
+              "displayName": "organizationFoundedYear",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationIndustry",
+              "displayName": "organizationIndustry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationSize",
+              "displayName": "organizationSize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationState",
+              "displayName": "organizationState",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCountry",
+              "displayName": "organizationCountry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1072,
+        640
+      ],
+      "id": "96aa4f7f-a3d8-494a-af83-10ddfd172add",
+      "name": "Apify Raw - Status update",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Apify Raw",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Not ideal",
+            "row_number": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationWebsite",
+              "displayName": "organizationWebsite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationLinkedinUrl",
+              "displayName": "organizationLinkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationFoundedYear",
+              "displayName": "organizationFoundedYear",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationIndustry",
+              "displayName": "organizationIndustry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationSize",
+              "displayName": "organizationSize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationState",
+              "displayName": "organizationState",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCountry",
+              "displayName": "organizationCountry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        944,
+        848
+      ],
+      "id": "064dd775-a59a-44ad-9c76-1d2ec7e623ce",
+      "name": "Apify Raw - Status update2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Lead Gen ##",
+        "height": 336,
+        "width": 1200,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -96
+      ],
+      "id": "926a8307-8954-48d8-92c6-87298614018b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## SDR ##",
+        "height": 848,
+        "width": 2064,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        272
+      ],
+      "id": "2ba7040c-2fee-4f9c-9b9c-c706108c254a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Email verifier ##",
+        "height": 768,
+        "width": 1312,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        1152
+      ],
+      "id": "920d8943-23ee-4458-91a8-08cbf16bce01",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Send to campaign ##",
+        "height": 512,
+        "width": 1376,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        1968
+      ],
+      "id": "6e81a264-ea80-4683-8154-f8e9bf132661",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "Setup Auth for gsheet @ https://console.cloud.google.com/\n\nSetup APi key for apify\n@ https://console.apify.com/",
+        "height": 144,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        944,
+        -32
+      ],
+      "id": "d974f22d-b70f-47f8-a4b1-ca3ac02b3a20",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/T1XDXWc1L92AfIJtd/run-sync-get-dataset-items",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"seniority\": [\n    \"Founder\",\n    \"President\",\n    \"CEO\"\n  ],\n  \"companyEmployeeSize\": [\n    \"2 - 10\",\n    \"11 - 50\",\n    \"51 - 200\",\n    \"201 - 500\"\n  ],\n  \"functional\": [\n    \"{{ $json['Target Industry'] }}\"\n  ],\n  \"personCountry\": [\n    \"{{ $json['Target Country'] }}\"\n  ],\n  \"personState\": [\n    \"{{ $json['Target state'] }}\"\n  ],\n  \"contactEmailStatus\": \"verified\",\n  \"companyCountry\": [\n    \"{{ $json['Target Country'] }}\"\n  ],\n  \"totalResults\": 1000,\n  \"includeEmails\": true\n}\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        80
+      ],
+      "id": "60ce1e0c-892e-44fd-a14a-f8494e510af9",
+      "name": "Apify HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "6HkFDHBTRgxQk6QC",
+          "name": "N8N X Apify"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Apify Raw",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Apify Raw - Get row(s) in sheet2').item.json.row_number }}",
+            "Status": "Sent to ICP"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationWebsite",
+              "displayName": "organizationWebsite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationLinkedinUrl",
+              "displayName": "organizationLinkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationFoundedYear",
+              "displayName": "organizationFoundedYear",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationIndustry",
+              "displayName": "organizationIndustry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationSize",
+              "displayName": "organizationSize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationState",
+              "displayName": "organizationState",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCountry",
+              "displayName": "organizationCountry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        112,
+        320
+      ],
+      "id": "a0c63b7d-e172-4fe2-8508-9c305416e102",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0",
+          "mode": "list",
+          "cachedResultName": "Leads - APify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1661841420,
+          "mode": "list",
+          "cachedResultName": "icp",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r9ymc-52mV13H1R-et2Td9dBHNXJMfHycFVh1lawIJ0/edit#gid=1661841420"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email status": "Sent to instantly",
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "functional",
+              "displayName": "functional",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationName",
+              "displayName": "organizationName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationDescription",
+              "displayName": "organizationDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "organizationCity",
+              "displayName": "organizationCity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email status",
+              "displayName": "Email status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        720,
+        2080
+      ],
+      "id": "ce71f438-32aa-4b80-aad1-3947ef1b14be",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "gpt-4"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -64,
+        672
+      ],
+      "id": "eda09987-cec0-45fd-b195-64f43e70a7f6",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "pq6Ws7AZsv9Fq3OF",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-20250514",
+          "cachedResultName": "Claude 4 Sonnet"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        672
+      ],
+      "id": "6abddaf8-7ccd-4e0f-8fb4-3e3ef2b082ae",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "HL7OgE8BWyZcYDd1",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Modify the Agents prompt as per your niche and service you provide\n\nSetup OpenAi & Claude credentials ",
+        "height": 144,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        384
+      ],
+      "id": "f632b504-7430-4242-bfd3-0511256eb608",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "Setup Reoon Credientials - https://www.reoon.com/email-verifier/\n\nOptional - You can choose Email verifier of your choice instead of reoon",
+        "height": 144,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1392
+      ],
+      "id": "89413051-0bce-4784-830a-90187905d066",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "Setup Instantly Credientials - https://instantly.ai/ \n\nOptional - You can choose Email software of your choice instead of instantly\n\nAdd the Api key and campaign id on http node",
+        "height": 192,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        2096
+      ],
+      "id": "e33cb5ed-d15e-4e1a-95b3-fb4ddb12f25d",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "Use this filter to get your target leads : https://peaky-leads-scraper-app.netlify.app/\n\nChoose the required filters that suits your target leads\n\nClick on fetch results & Generate json, update that json in the http node in n8n for customization.\n\nExample json format:\n\n```jsx\n{\n\"seniority\": [\n\"Founder\",\n\"CEO\",\n\"CXO\",\n\"Vice President\",\n\"Chairman\",\n\"President\"\n],\n\"functional\": [\n\"Sales\",\n\"Marketing\",\n\"Finance\",\n\"Inside Sales\"\n],\n\"companyEmployeeSize\": [\n\"2 - 10\",\n\"11 - 50\",\n\"51 - 200\"\n],\n\"personCountry\": [\n\"United States\"\n],\n\"personState\": [\n\"Utah\"\n],\n\"contactEmailStatus\": \"verified\",\n\"companyCountry\": [\n\"United States\"\n],\n\"totalResults\": 1500,\n\"includeEmails\": true\n}\n```\n\nTarget countries options:\n\n💡\n\n\"United States\", \"United Kingdom\", \"Canada\", \"Australia\", \"Germany\", \"Netherlands\", \"Singapore\", \"United Arab Emirates\", \"Switzerland\", \"Sweden\", \"France\", \"New Zealand\", \"Ireland\", \"Denmark\", \"Norway\", \"Japan\", \"Israel\", \"Hong Kong\" , \"India\"\n\n\nTarget States options:\n\n💡\n\n- United States:\n    \n    California, New York, Vermont, Indiana, Oregon, Utah, Maine, Iowa, Virginia, Alabama, Hawaii, Massachusetts, Connecticut, Tennessee, Idaho, Arkansas, Florida, Alaska, Nevada, Oklahoma, Ohio, Georgia, Wyoming, Delaware, Rhode Island, Minnesota, Louisiana, North Dakota, New Hampshire, Colorado, Arizona, Washington, Montana, West Virginia, Michigan, New Mexico, South Carolina, North Carolina, Pennsylvania, Missouri, District of Columbia, Kentucky\n    \n- United Kingdom:\n    \n    London Borough of Redbridge, City of Leicester, Poole, Swindon, Orkney Islands, Gloucestershire, City of Peterborough, Leeds, South Lanarkshire, Wokingham, Bradford, Sheffield, North East Lincolnshire, Rotherham, North Yorkshire, Bedford, Gateshead, Brighton and Hove, Coventry, Liverpool, Rochdale, Oldham, Solihull, Central Bedfordshire, Calderdale, West Dunbartonshire, Royal Borough of Greenwich, Royal Borough of Kingston upon Thames, London Borough of Havering, London Borough of Hackney, London Borough of Bexley, Bolton, Falkirk, Blackpool, City of Wolverhampton, Clackmannanshire, City of Southampton, Fife, Walsall, City of Nottingham, Angus, Banbridge, Ballymoney, City of Derby, Dundee, Dumfries and Galloway, Edinburgh, Devon, Dorset, Cambridgeshire, Aberdeen, Aberdeenshire, Argyll and Bute, East Lothian, Inverclyde, Moray, Scottish Borders, Shetland Islands, Outer Hebrides, Highland, Northumberland, Norfolk, Suffolk, Essex, Kent, Surrey, Hampshire, Oxfordshire, Worcestershire, Shropshire, Staffordshire, Derbyshire, Nottinghamshire, Lincolnshire, Leicestershire, Rutland, Northamptonshire, Warwickshire, West Midlands, Cheshire, Merseyside, Greater Manchester, Lancashire, Cumbria, Durham, Tyne and Wear, East Sussex, West Sussex, Berkshire, Buckinghamshire, Hertfordshire, Isle of Wight, Cornwall, Somerset, Wiltshire, Gloucestershire, Bristol, Bath and North East Somerset, North Somerset, South Gloucestershire, Swindon, Bournemouth, Poole, Dorset, Devon, Plymouth, Torbay, Cornwall, Isles of Scilly\n    \n- Germany:\n    \n    Thuringia, Lower Saxony, Schleswig-Holstein, North Rhine-Westphalia, Rhineland-Palatinate, Saarland, Baden-Württemberg, Bavaria, Hesse, Berlin, Hamburg\n    \n- United Arab Emirates:\n    \n    Fujairah, Dubai, Ras al-Khaimah, Umm al-Quwain, Abu Dhabi Emirate, Ajman Emirate, Sharjah Emirate\n    \n- France:\n    \n    Poitou-Charentes, Lower Normandy, French Guiana, Brittany, Auvergne, Aquitaine, Alsace, Rhône-Alpes, Provence-Alpes-Côte d'Azur, Pays de la Loire, Hauts-de-France, Normandy, Nouvelle-Aquitaine, Auvergne-Rhône-Alpes, Centre-Val de Loire, Bourgogne-Franche-Comté, Grand Est, Occitanie, Corsica, Île-de-France, Paris, Upper Normandy, Picardy, Champagne-Ardenne, Lorraine, Franche-Comté, Burgundy, Limousin, Languedoc-Roussillon\n    \n- Denmark:\n    \n    Capital Region of Denmark, Region Zealand, North Denmark Region\n    \n- South Korea:\n    \n    Seoul, Ulsan, South Jeolla Province, Kaohsiung, Incheon, Gyeonggi Province, North Gyeongsang Province, South Gyeongsang Province, Jeju, Daejeon, Daegu, Gwangju, Busan, Gangwon Province, North Jeolla Province, South Chungcheong Province, North Chungcheong Province\n    \n\n- Canada:\n    \n    British Columbia, Saskatchewan, Prince Edward Island, Newfoundland and Labrador, Quebec, Nova Scotia, Manitoba, Alberta, New Brunswick, Northwest Territories, Nunavut, Ontario, Yukon\n    \n- Netherlands:\n    \n    Flevoland, South Holland, North Holland, Utrecht, Zeeland, Overijssel, Drenthe, Friesland, Groningen, Limburg, North Brabant, Gelderland\n    \n- Switzerland:\n    \n    Canton of Neuchâtel, Nidwalden, Canton of Schaffhausen, Canton of Redange, Glarus, Uri, Obwalden, Schwyz, Thurgau, Canton of Lucerne, Canton of Esch-sur-Alzette, Canton of Solothurn, Canton of Vaud, Canton of St. Gallen, canton of Zürich, canton of Bern, Aargau, Basel-Landschaft, Appenzell Innerrhoden, Appenzell Ausserrhoden, Ticino, Canton of Fribourg, Canton of Geneva, Canton of Valais\n    \n- New Zealand:\n    \n    Manawatu-Wanganui Region, Taranaki Region, Nelson Region, Gisborne District, Hawke's Bay Region, Northland Region, Waikato Region, Bay of Plenty Region, Otago Region, Tasman District, Chatham Islands\n    \n- Norway:\n    \n    Nord-Trøndelag, Vest-Agder, Møre og Romsdal, Troms, Finnmark, Rogaland, Oppland, Telemark, Nordland, Akershus, Buskerud, Vestfold, Hedmark, Oslo, Trøndelag\n    \n- India:\n    \n    Rajasthan, Andaman and Nicobar Islands, Dadra and Nagar Haveli, Manipur, Madhya Pradesh, Chhattisgarh, Punjab, Gujarat, Haryana, Delhi, Puducherry, Odisha, Uttarakhand, Nagaland, Arunachal Pradesh, Tamil Nadu, Mizoram, Tripura, Jharkhand, Andhra Pradesh, Assam, Meghalaya, Himachal Pradesh, Sikkim, Uttar Pradesh, Kerala, Karnataka, Goa, Jammu and Kashmir, Telangana, Ladakh, West Bengal, Bihar, Maharashtra\n    \n\n- Australia:\n    \n    Australian Capital Territory, Queensland, South Australia, Victoria, Tasmania, Northern Territory, New South Wales, Western Australia\n    \n- Singapore:\n    \n    Central Singapore Community Development Council, North East Community Development Council, North West Community Development Council, South East Community Development Council, South West Community Development Council\n    \n- Sweden:\n    \n    Västerbotten County, Stockholm County, Kalmar County, Kronoberg County, Jönköping County, Örebro County, Uppsala County, Dalarna County, Norrbotten County, Västernorrland County, Västmanland County, Halland County, Blekinge\n    \n- Ireland:\n    \n    Connacht, Leinster, Munster, Ulster, County Kerry, County Donegal, County Cavan, County Laois, County Roscommon, County Offaly, County Monaghan, County Mayo, County Clare, County Limerick, County Galway, County Sligo, County Louth, County Longford, County Westmeath, County Kilkenny, County Waterford, County Wexford, County Wicklow, County Carlow, County Kildare, County Cork, County Tipperary\n    \n- Japan:\n    \n    Hokkaidō Prefecture, Tokyo, Nagano Prefecture, Fukuoka Prefecture, Ōita Prefecture, Tochigi Prefecture, Kagoshima Prefecture, Fukui Prefecture, Saga Prefecture, Yamaguchi Prefecture, Okayama Prefecture, Nara Prefecture, Shimane Prefecture, Gunma Prefecture, Miyazaki Prefecture, Tokushima Prefecture, Yamagata Prefecture, Hyōgo Prefecture, Kyōto Prefecture, Saitama Prefecture, Aichi Prefecture, Niigata Prefecture, Hiroshima Prefecture, Shiga Prefecture, Kagawa Prefecture, Akita Prefecture, Mie Prefecture, Ehime Prefecture, Kanagawa Prefecture, Ibaraki Prefecture, Toyama Prefecture, Kumamoto Prefecture, Ishikawa Prefecture, Tottori Prefecture, Iwate Prefecture, Chiba Prefecture, Okinawa Prefecture, Fukushima Prefecture, Shizuoka Prefecture, Gifu Prefecture, Nagasaki Prefecture\n\nTarget industry options:\n\n\n💡\n\n\"Admin\", \"Analytics\", \"Applications\", \"Cloud\", \"Compliance\", \"Controller\", \"Customer Service\", \"Cyber Security\", \"Data Engineering\", \"Devops\", \"Digital\", \"Distribution\", \"Engineering\", \"Finance\", \"Fraud\", \"Hiring\", \"HR\", \"Infrastructure\", \"Inside Sales\", \"IT\", \"Learning\", \"Legal\", \"Marketing\", \"Network Security\", \"Operations\", \"Product Management\", \"Product Security\", \"Production\", \"Purchase\", \"Research\", \"Risk\", \"Sales\", \"Security\", \"Support\", \"Testing\", \"Training”\n\nRoles options:\n\n💡\n\n \"Founder\", \"Chairman\", \"President\", \"CEO\", \"CXO\", \"Vice President\", \"Director\", \"Head\", \"Manager\", \"Senior\", \"Junior\", \"Entry Level\", \"Executive”\n",
+        "height": 2816,
+        "width": 1088
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2208,
+        -176
+      ],
+      "id": "999bb1d3-76bd-462c-a276-ec115aef5a8f",
+      "name": "Sticky Note8"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "target Market - Get rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Apify Raw - Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "ICP sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Apify Raw - Status update2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets7": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "quick Reoon verifier ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "quick Reoon verifier ": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ICP sheet": {
+      "main": [
+        [
+          {
+            "node": "Apify Raw - Status update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "target Market - Get rows": {
+      "main": [
+        [
+          {
+            "node": "Apify HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Rawe - Append row": {
+      "main": [
+        [
+          {
+            "node": "Target Market Update status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Raw - Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Raw - Status update": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Raw - Status update2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Apify Rawe - Append row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0a7cfb70-81b6-49d4-b47d-73da48133a83",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "77f1d8375380ee2bc4995763b4e39528bf040d446fc3e9e5f6d802ec19784049"
+  },
+  "id": "fWYZeZdoAmYZfZCs",
+  "tags": []
+}
