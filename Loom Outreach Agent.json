@@ -1,0 +1,2665 @@
+{
+  "name": "Loom Outreach Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        768,
+        1184
+      ],
+      "id": "d1e8d268-7f7b-434e-a17f-20aee98b03b0",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34fd16d7-45de-4621-a3c8-e7404f7c84a8",
+              "leftValue": "={{ $json.result }}",
+              "rightValue": "ready",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1776,
+        1184
+      ],
+      "id": "66f8c237-bf4d-4212-bd9d-a0cb439fd647",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1968,
+        1296
+      ],
+      "id": "95029bb1-2f3b-4240-87c4-33fa9ef70315",
+      "name": "Wait",
+      "webhookId": "bdeb3c69-128b-40a4-b74a-e07bb2225f06"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a51a2b49-15ef-4e13-9502-87c8e4ee8f42",
+              "name": "video_id",
+              "value": "={{ $json.data.video_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        576,
+        1168
+      ],
+      "id": "4945afb4-d6c7-4a0d-95d0-338acf8b9ab9",
+      "name": "Video_ID",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1e3429b0-39c3-4c53-8586-a9f72631a684",
+              "name": "video_id",
+              "value": "={{ $json.video_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        1184
+      ],
+      "id": "16deab18-dc9f-46ee-bb58-5cc5bcd2935b",
+      "name": "Video_ID_Value"
+    },
+    {
+      "parameters": {
+        "url": "https://api.heygen.com/v1/video_status.get",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "video_id",
+              "value": "={{ $json.video_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1136,
+        1184
+      ],
+      "id": "5596cd38-9b94-41d0-a40f-7c0e4e4c4607",
+      "name": "Check_Video_Progress",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "X3mN0JUUeY18xM39",
+          "name": "Tavily x N8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a77636c9-c3f2-40bf-9b16-c39dd91c7e57",
+              "name": "status",
+              "value": "={{ $json.data.status }}",
+              "type": "string"
+            },
+            {
+              "id": "ef34dd1d-d584-4467-86dd-540592fbd821",
+              "name": "video_id",
+              "value": "={{ $json.data.id }}",
+              "type": "string"
+            },
+            {
+              "id": "f7e0f84a-051f-45ce-bbf4-73f80bdb9ecc",
+              "name": "gif_url",
+              "value": "={{ $json.data.gif_url }}",
+              "type": "string"
+            },
+            {
+              "id": "ab4d5fc2-c4dd-466b-a7d2-bd837fbf3ef8",
+              "name": "video_url",
+              "value": "={{ $json.data.video_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1312,
+        1184
+      ],
+      "id": "2dd622b9-66ba-4e50-8c6f-8b84ec42b05b",
+      "name": "Extract_Video_Status"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  return {\n    json: { \n      video_id: item.json.video_id, // Preserve video_id\n      gif_url: item.json.gif_url, // Use gif_url1 instead of gif_url\n      video_url: item.json.video_url, // Use video_url1 instead of video_url\n      result: item.json.status === \"completed\" ? \"ready\" : \"not ready\"\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        1184
+      ],
+      "id": "0eee0a99-ed58-4be9-89bf-b0ce53fa5ea1",
+      "name": "Evaluate_Video_Status"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.heygen.com/v1/video/share",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_id",
+              "value": "={{ $json.video_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1952,
+        912
+      ],
+      "id": "5031da87-a0b9-46dc-9929-1e3c85cc2d24",
+      "name": "Get_Sharable_Link",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "X3mN0JUUeY18xM39",
+          "name": "Tavily x N8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.heygen.com/v2/template/ADD_TEMPLATE_ID/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"test\": true,\n  \"caption\": false,\n  \"template_id\": \"ADD_TEMPLATE_ID\",\n  \"title\": \"Generated Video\",\n  \"include_gif\": true,\n  \"enable_sharing\": true,\n  \"dimension\": {\n    \"width\": 1280,\n    \"height\": 720\n  },\n  \"variables\": {\n    \"message_1\": {\n      \"name\": \"message_1\",\n      \"type\": \"text\",\n      \"properties\": {\n        \"content\": \"{{ $('Video details').item.json.script }}\"\n      }\n    },\n    \"first_name\": {\n      \"name\": \"first_name\",\n      \"type\": \"text\",\n      \"properties\": {\n        \"content\": \"{{ $('Video details').item.json.name }}\"\n      }\n    },\n    \"screenshot\": {\n      \"name\": \"screenshot\",\n      \"type\": \"image\",\n      \"properties\": {\n        \"url\": \"{{ $json.data.url }}\",\n        \"asset_id\": null,\n        \"fit\": \"contain\"\n      }\n    }\n  }\n}\n",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        400,
+        1168
+      ],
+      "id": "7e74a991-d6bc-4a77-a1a6-1b01943c1b75",
+      "name": "Generate HeyGen Video",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "X3mN0JUUeY18xM39",
+          "name": "Tavily x N8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/apify~screenshot-url/run-sync-get-dataset-items?token={{ $json.Apify_API_Key }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"delay\": 0,\n    \"proxy\": {\n        \"useApifyProxy\": true\n    },\n    \"scrollToBottom\": false,\n    \"urls\": [\n        {\n            \"url\": \"{{ $('On form submission').item.json['Company website? (include https://www.\"'] }}\",\n            \"method\": \"GET\"\n        }\n    ],\n    \"viewportWidth\": 1280,\n    \"waitUntil\": \"load\",\n    \"waitUntilNetworkIdleAfterScroll\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        816,
+        928
+      ],
+      "id": "c4162a36-f524-4a68-9223-3c059767c355",
+      "name": "Website Screenshot"
+    },
+    {
+      "parameters": {
+        "operation": "crop",
+        "width": 1800,
+        "height": 800,
+        "options": {
+          "format": "png"
+        }
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        928
+      ],
+      "id": "935e76ff-cfde-400b-9ca2-851e04b84bd5",
+      "name": "Edit Image"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.screenshotUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1072,
+        928
+      ],
+      "id": "f3d0a55a-ad94-45a1-ae70-688aa62ee0ee",
+      "name": "Get Binary Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.imgbb.com/1/upload?&key=ADD_API_KEY_HERE",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "image",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1504,
+        928
+      ],
+      "id": "81d6d329-fe77-4cee-a1c4-7253656067df",
+      "name": "Host Image Imgbb"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d2481480-93f0-431b-8ce7-8d265366533e",
+              "name": "embed_video",
+              "value": "=<div style=\"padding: 24px 0\">   <a href=\"{{ $json.data }}\">     <img style=\"height: 270px\" src=\"{{ $('Check_Video_Progress').item.json.data.gif_url }}\" alt=\"preview image\" />   </a> </div>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2176,
+        672
+      ],
+      "id": "921ce755-197f-4053-8c6b-3e9c8014dcfe",
+      "name": "embed_video_html"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "1m8cVdbgAgoz6tQ1",
+          "mode": "list",
+          "cachedResultName": "Prospect Research Automation"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "Omar",
+            "compnay_name": "Omnivate",
+            "company_website": "www.omnivate.co.uk",
+            "linkedin_url": "https://www.linkedin.com/in/omar-almubarak/",
+            "linkedin_company_url": "https://www.linkedin.com/company/omnivate-ai"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "compnay_name",
+              "displayName": "compnay_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "company_website",
+              "displayName": "company_website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "linkedin_url",
+              "displayName": "linkedin_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "linkedin_company_url",
+              "displayName": "linkedin_company_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        752,
+        400
+      ],
+      "id": "75275281-9e43-45dc-88bb-1d2fd33f7b4b",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a8f0b2b8-d716-4a16-a277-42bf33390615",
+              "name": "Subject_Line",
+              "value": "={{ $json.message.content.subjectLine }}",
+              "type": "string"
+            },
+            {
+              "id": "997f1b14-182a-4e1e-8d32-2d53c9ba7986",
+              "name": "Email_Body",
+              "value": "={{ $json.message.content.emailBody }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1888,
+        400
+      ],
+      "id": "b6c892db-d5a8-48d2-9179-037c85f36607",
+      "name": "Email_Content"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ JSON.stringify($json.research) }}"
+            },
+            {
+              "content": "=Your job is to write a very short personalised email. You are a world-class email copywriter. You know how to write emails that feel very human and are the complete opposite from the normal sales and robotic like emails that a business normally sends.\n\nUse the information provided about the prospect to write an email:\n-Not all the information provided to you will be good. Determine what content is high quality and use that. Do not use the rest.\ne.g a LinkedIn post is old or does not seem very relevant\n-The information you will be provided is their LinkedIn about description, company description, last Linkedin post, and recent industry news if they have any\n\nWrite a four sentence email:\n-Hi {{ $('Execute Workflow').item.json.first_name }}\n-First sentence: Lead with a personalised compliment. Make this sound very genuine and not corporate at all. Sound human.\n-Second sentence: Make this personalised about them and their company\n-Third sentence: Say it would be great to chat about how their company could benefit from AI automation/agents\n-Fourth sentence: Bring in some personality and a light hearted ending to the email\n-Sign off the email in a friendly way\n-Add a p.s after the sign off that you think would be a great addition to the email\n\nCome up with a personalised 4 word max subject line:\n-Make the subject line personalised to them and linked to the personal content in the email\n-Don't give too much away in the subject line\n-We want to induce so much curiosity that they can't help but open the email\n\nRules:\n-This email should sound very human and personable. \n-No corporate talk\n-Sign off as Ankit\n-Add a line break between each sentence to make everything easy to read. No big paragraphs. There should be one empty line between each sentence in the email. This will be outputted in html so make sure the line breaks are formatted to work.\n\nOutput a JSON with the subject line + the email body:\n\n{\n  \"subjectLine\": \"\",\n  \"emailBody\": \"\"\n}\n",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1568,
+        400
+      ],
+      "id": "7011c5ba-5721-403e-8e1e-14e3eed4a5ec",
+      "name": "Personalised_Email",
+      "credentials": {
+        "openAiApi": {
+          "id": "pq6Ws7AZsv9Fq3OF",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst updatedItems = items.map((item) => {\n  return {\n    research: item?.json?.message?.content,\n  };\n});\nreturn updatedItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        400
+      ],
+      "id": "c95fce23-b426-45f6-890c-345dfb44ed25",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=First name: \n{{ $json.first_name }}\n\n---\n\nLinkedin about section:\n{{ $json.linkedin_about_section }}\n\n---\nLast LinkedIn post data: \n{{ $json.linkedin_Post_Date }}\n\nLinkedin post text: \n{{ $json.Linkedin_Post_Text }}\n\n---\nLinkedin company description: \n{{ $json.Linkedin_Company_Description }}\n\n---\nWebsite text: \n{{ $json.website_text }}\n\n---\nIndustry news:\n{{ $json.Industry_News }}"
+            },
+            {
+              "content": "=# Goal\nIdentify what high-quality information to keep about a prospect which should be passed to an email writing AI\n\n# Context\n- A research agent has scraped a lot of informaiton on a potential prospect.\n-You are going to be given a lot of information about a prospect like their Linkedin about section, name, date and content of their last linkedin post, industry news, and website text. \n-Some of this information may be high-quality and useful when trying to write an email outreach and some may be low quality and shoud not be considered \n- We want to figure out what could be really useful information to use and remove any low quality information\n\n\nRules:\n- Evaluate all the content to determine if it should be kept\n- Do not include the LinkedIn post if it is more than a month old\n- Remove industry news if none is present\n- Call out what you think is the best information to use\n- Make this informaiton structured in a succinct way\n\n\nOutput:\n-Output results in a JSON\n-Make all the information appear as seperate items so no arrays\n-Only include high-quality content\n-Clearly label the content\n\n",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        960,
+        400
+      ],
+      "id": "892d62bc-3b0e-4727-b699-1704d38c6fef",
+      "name": "Content Evaluation",
+      "credentials": {
+        "openAiApi": {
+          "id": "pq6Ws7AZsv9Fq3OF",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Subject line: {{ $json.Subject_Line }}\n\nemail_bodyy: {{ $json.Email_Body }}"
+            },
+            {
+              "content": "=Write a 3 sentence script for an outreach video I am going to be sending to a prospect.\n\nUse the information from the email provided to you as context.\n\nIn this video I am going to be speaking over their website so include something about how you stublmed onto their website and you think you can help them.\n\nOutput:\n- Only output the script and nothing else. No commentary.\n- Output content as a JSON\n\n{\n  \"personalised_script\": \"\"\n}",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        832,
+        672
+      ],
+      "id": "16a74345-1e2b-40ae-8028-1d1b98a1d44c",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "pq6Ws7AZsv9Fq3OF",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e7fed0f7-103a-4b33-8c44-0e73fcaa0ed7",
+              "name": "pesonalised_script",
+              "value": "={{ $json.message.content.personalised_script }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        672
+      ],
+      "id": "576fa61a-bf7f-461f-a407-6e8604ce52db",
+      "name": "Get Script"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c62b3f30-b1d5-43ee-b2cc-c7e34d4f6abf",
+              "name": "script",
+              "value": "={{ $json.pesonalised_script }}",
+              "type": "string"
+            },
+            {
+              "id": "6373cdb0-596c-417a-bd46-4386429dbf03",
+              "name": "name",
+              "value": "={{ $('Execute Workflow').item.json.first_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1312,
+        672
+      ],
+      "id": "dc3dfeed-a094-45cf-8119-5741605be844",
+      "name": "Video details"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0cfaf654-f67d-4162-940d-f074a8420e50",
+              "name": "Apify_API_Key",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        576,
+        928
+      ],
+      "id": "0b7e702f-88d7-44b6-bcd2-a9630f31fff6",
+      "name": "Apify_API_Key"
+    },
+    {
+      "parameters": {
+        "formTitle": "Prospect Information",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Prospect name?",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Company name?",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Company website? (include https://www.\"",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Personal LinkedIn URL",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Company Linkedin URL",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -112,
+        624
+      ],
+      "id": "c07428a8-7b9c-4aef-a2bd-c3a039a04486",
+      "name": "On form submission",
+      "webhookId": "b4cbb1af-c58c-487e-a1c8-3091cdaf87a1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2352,
+        416
+      ],
+      "id": "1a045298-4d31-462c-b694-215f3ceaf1b5",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "model": "perplexity/sonar-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        912,
+        2704
+      ],
+      "id": "00ae862b-8478-4eff-9311-1bcd4e7611bb",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "RSEXGXtfXnxUwIWP",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Company name: {{ $('Prospect Information').item.json.compnay_name }}\n",
+        "options": {
+          "systemMessage": "=You are a research agent that helps me research information about my prospects on the internet. \n\nYour job is to use the information I give you and search for any recent news within the last three months about the company. \n\nTry to look for anything that could be useful in an outreach message. To show that we have researched them, use things like news about their company, updates, or anything else that could be a good hook in an email\n\nGive me a very succinct high-level summary in one paragraph of any news that you think is relevant and ensure that it is within the last three months. If there is no relevant news, say \"no relevant news was found\". Do not return anything if you think it may not be the right company or if it's out of date. "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        912,
+        2544
+      ],
+      "id": "c2559866-691d-4cd1-9db1-eee3403cc2ca",
+      "name": "AI Agent",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f948fcf3-65b8-43b0-93c4-bb4e7ac557c4",
+              "name": "Industry_News",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        2544
+      ],
+      "id": "60cd47be-9872-408d-bea0-bf8bd7808df5",
+      "name": "Industry_News_Data"
+    },
+    {
+      "parameters": {
+        "content": "## Perplexity Research Agent - Company News",
+        "height": 380,
+        "width": 540,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        2464
+      ],
+      "id": "d712b68c-46f7-4a98-9043-4109bc2c0503",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/apimaestro~linkedin-company-detail/run-sync-get-dataset-items?token={{ $json.Apify_API_Key }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"identifier\": [\"{{ $('Prospect Information').item.json.linkedin_company_url }}\"]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        2240
+      ],
+      "id": "dc099e4f-2062-485c-b561-c7cd90022448",
+      "name": "Apify Company Enrichment"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88d242f9-4082-435f-8fd5-be36e293d2c1",
+              "name": "Linkedin_Company_Description",
+              "value": "={{ $json.basic_info.description }}",
+              "type": "string"
+            },
+            {
+              "id": "9070a562-b49f-4942-8cf0-93070063fddd",
+              "name": "Company_Logo",
+              "value": "={{ $json.media.logo_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1152,
+        2240
+      ],
+      "id": "f7d0394f-2d7d-4bef-98ae-8ae72984fcfc",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "df0381bb-1187-45a0-8ce9-6817dd8ba6e3",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "eb14d230-5663-494c-bebd-12b2ffbda241",
+              "name": "compnay_name",
+              "value": "={{ $json.compnay_name }}",
+              "type": "string"
+            },
+            {
+              "id": "82eb89aa-987f-4376-89f2-4d19a36c348a",
+              "name": "company_website",
+              "value": "={{ $json.company_website }}",
+              "type": "string"
+            },
+            {
+              "id": "1b2fd27c-ab0d-4460-982b-12654f9f8c9a",
+              "name": "linkedin_url",
+              "value": "={{ $json.linkedin_url }}",
+              "type": "string"
+            },
+            {
+              "id": "2b6464e8-0bab-4491-9a2e-2a684224edfb",
+              "name": "linkedin_company_url",
+              "value": "={{ $json.linkedin_company_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        2240
+      ],
+      "id": "33caddaa-0afe-4b01-a397-d4785f1a3ead",
+      "name": "Prospect Information"
+    },
+    {
+      "parameters": {
+        "content": "## Scrape Last LinkedIn Company Data",
+        "height": 240,
+        "width": 540,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        896,
+        2176
+      ],
+      "id": "e6de387c-cbcb-420b-beef-6c0c3cebc26b",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/apimaestro~linkedin-profile-posts/run-sync-get-dataset-items?token={{ $json.Apify_API_Key }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"limit\": 1,\n    \"username\": \"{{ $('Prospect Information').item.json.linkedin_url }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        992,
+        1984
+      ],
+      "id": "5b08f13d-3973-4ae8-b25d-59577bc14e4e",
+      "name": "Get_LinkedIn_Posts"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e779a8ea-37ff-41b4-b479-29bb87775ba8",
+              "name": "linkedin_Post_Date",
+              "value": "={{ $json.posted_at.date }}",
+              "type": "string"
+            },
+            {
+              "id": "ba12d1be-21bb-441a-a081-e109025574e5",
+              "name": "Linkedin_Post_Text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        1984
+      ],
+      "id": "cb1cbc59-c035-4809-8230-e805c4332899",
+      "name": "LinkedIn_Posts_Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/apimaestro~linkedin-profile-detail/run-sync-get-dataset-items?token={{ $json.Apify_API_Key }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"username\": \"{{ $('Prospect Information').item.json.linkedin_url }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        992,
+        1680
+      ],
+      "id": "ef75fa09-6ecc-4b1f-8ee6-03bb75c7af56",
+      "name": "Apify Profile Enrichment"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7af792c6-7f63-47d4-851e-e9a435f3db60",
+              "name": "linkedin_about_section",
+              "value": "={{ $json.basic_info.about }}",
+              "type": "string"
+            },
+            {
+              "id": "fba0a415-6daf-4589-965a-91021b34d6c6",
+              "name": "profile_picture",
+              "value": "={{ $json.basic_info.profile_picture_url }}",
+              "type": "string"
+            },
+            {
+              "id": "1881f876-43d4-4df3-abaa-184215e3aeb0",
+              "name": "first_name",
+              "value": "={{ $json.basic_info.first_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        1680
+      ],
+      "id": "e7520bed-d5ae-490e-a4e5-5886e54c538b",
+      "name": "Profile_Scraper_Data"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "compnay_name"
+            },
+            {
+              "name": "company_website"
+            },
+            {
+              "name": "linkedin_url"
+            },
+            {
+              "name": "linkedin_company_url"
+            }
+          ]
+        }
+      },
+      "id": "885a84fe-6f6c-4698-a710-2cd5898542bd",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        112,
+        2240
+      ]
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        960,
+        2928
+      ],
+      "id": "f29cc1b0-d81a-444d-bd58-42777d5d74ce",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $('Prospect Information').item.json.company_website }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        752,
+        2928
+      ],
+      "id": "b5596d35-68d2-4fb7-a47d-a663a53b8448",
+      "name": "Scrape Website"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c38cc1f4-aabb-4c3a-af85-ba3c18145ad6",
+              "name": "website_text",
+              "value": "={{ $json.message.content.extracted_text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1536,
+        2928
+      ],
+      "id": "41a8cf0b-9db3-4e9b-84ca-a045332d8fb7",
+      "name": "website_text"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0cfaf654-f67d-4162-940d-f074a8420e50",
+              "name": "Apify_API_Key",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        2240
+      ],
+      "id": "92f697b1-e166-45cb-8a3d-701897c0b551",
+      "name": "Apify_API_Key1"
+    },
+    {
+      "parameters": {
+        "content": "## Scrape Last LinkedIn Post",
+        "height": 240,
+        "width": 540,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        896,
+        1904
+      ],
+      "id": "d5f3722d-08d3-4d42-91e2-407dc472bc65",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 6,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2192,
+        2048
+      ],
+      "id": "cbf9c0e5-fdca-4afe-bcdc-188cdbfbe9bf",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Markdown from scraped website:\n\n{{ $json.data }}\n"
+            },
+            {
+              "content": "You are an expert web scraper. I will provide you with the markdown of a website. Your task is to extract all the visible text content and consolidate it into a single block of text. Ignore HTML tags, scripts, URLs and styles. \n\nOutput the extracted text in a JSON format with the following structure:\n\n{\n  \"extracted_text\": \"All the extracted text from the webpage goes here in one block.\"\n}",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1184,
+        2928
+      ],
+      "id": "e7674573-55fd-4623-8c79-6bf73d4914b6",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pq6Ws7AZsv9Fq3OF",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Scrape LinkedIn Profile Data",
+        "height": 240,
+        "width": 540,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        896,
+        1616
+      ],
+      "id": "adb67ca6-dbb2-4e93-b004-f10957c65129",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        448,
+        416
+      ],
+      "id": "775844ac-c337-4a3d-8fd3-e018c8bbbe27",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "=",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2560,
+        160
+      ],
+      "id": "120b4529-5d00-47f1-9cd6-5fb7bfdd8c8f",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "=",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        176,
+        416
+      ],
+      "id": "103ff029-d777-4708-a952-6860a7c65f3e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "gNLv6wE5mp6v4383",
+          "name": "GSA - subrahmanya"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -112,
+        416
+      ],
+      "id": "8c11d92f-29cd-4e9d-a571-096c4f38f866",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE",
+          "mode": "list",
+          "cachedResultName": "Solar Leads | Website (Mid)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 606376511,
+          "mode": "list",
+          "cachedResultName": "EMAILS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit#gid=606376511"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Used By",
+              "lookupValue": "Ankit"
+            },
+            {
+              "lookupColumn": "Sent",
+              "lookupValue": "No"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        512,
+        3248
+      ],
+      "id": "8b5e59b4-88fa-46ec-a84c-cbd87f4ddc2a",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cea9ec35-3782-4037-822e-7ca07cb4be55",
+              "name": "Biz Email",
+              "value": "={{ $('Google Sheets').item.json['Biz Email'] }}",
+              "type": "string"
+            },
+            {
+              "id": "b29c48ad-3ebf-4a18-b365-3ef00d27ffb5",
+              "name": "Subject",
+              "value": "={{ $('Google Sheets').first().json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "3a9e651d-35db-4e68-acd4-330211d8b838",
+              "name": "Script",
+              "value": "={{ $('Google Sheets').first().json.Script }}",
+              "type": "string"
+            },
+            {
+              "id": "baa38f39-ab0b-45f5-b570-31af721f2be5",
+              "name": "Email Account",
+              "value": "={{ $json['Email Account'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        3472
+      ],
+      "id": "5792a105-463c-4b05-84c3-620f3f269573",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Edit Fields2').item.json['Email Account'] }}",
+                    "rightValue": "Ankit young",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0409a868-9d3f-4029-b0ff-9269acbf9ce5"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "022d0db9-6ba8-43f4-a9db-fcf078586f99",
+                    "leftValue": "={{ $('Edit Fields2').item.json['Email Account'] }}",
+                    "rightValue": "Ankit old",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "51868102-1d13-439e-9c60-6478915f75af",
+                    "leftValue": "={{ $('Edit Fields2').item.json['Email Account'] }}",
+                    "rightValue": "ethan carter",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f7117969-59c8-43a2-9a50-605f154b941f",
+                    "leftValue": "={{ $json['Email Account'] }}",
+                    "rightValue": "Mason",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1200,
+        3744
+      ],
+      "id": "dd6bbfa5-d6f8-4ae7-936a-ce94527a398f",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json['Random Num'] }}",
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        3776
+      ],
+      "id": "122f1d0a-c38c-4d0f-9434-04d56a8ece5d",
+      "name": "Wait1",
+      "webhookId": "117966d8-d85c-4938-82f3-8ea993b58d54"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE",
+          "mode": "list",
+          "cachedResultName": "Solar Leads | Website (Mid)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 606376511,
+          "mode": "list",
+          "cachedResultName": "EMAILS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/136uYwVD_FNqRsBofl6kukYWx5B5oDnlgQoxzE_3dHUE/edit#gid=606376511"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Biz Email": "={{ $('Switch').item.json['Biz Email'] }}",
+            "Sent": "Yes"
+          },
+          "matchingColumns": [
+            "Biz Email"
+          ],
+          "schema": [
+            {
+              "id": "Total:",
+              "displayName": "Total:",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Used By",
+              "displayName": "Used By",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email Account",
+              "displayName": "Email Account",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Sent",
+              "displayName": "Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Business",
+              "displayName": "Business",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Biz Email",
+              "displayName": "Biz Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Loaction",
+              "displayName": "Loaction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company info",
+              "displayName": "Company info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Website",
+              "displayName": "Website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Script",
+              "displayName": "Script",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1984,
+        3984
+      ],
+      "id": "4d344897-33e1-4bfa-979c-4f666b4b57a1",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tY0FJBuJ7JTKB0im",
+          "name": "Ankit - Gsheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\n\nAnkit Rai\nCo-founder\nRapple Media\n\nEmail:ankitrai.rapplemedia@gmail.com",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1616,
+        3584
+      ],
+      "id": "5a01687b-e29d-41ea-a43d-f2359e58dd22",
+      "name": "Gmail1",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "h9pDuy8IJb4YrFHT",
+          "name": "Ankit Old Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\n\nEthan Carter\nMarketing Head\nRapple Media\n\nEmail: ethancarterreads@gmail.com",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1616,
+        3776
+      ],
+      "id": "35b1084d-cd91-4965-adf1-44d3ba8617d5",
+      "name": "Gmail2",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "faPVsPFctmyI1MVx",
+          "name": "Etahn Carter Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\n\nMason Reed\nMarketing Head\nRapple Media\n\nEmail : masonreedtalks@gmail.com",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1616,
+        3984
+      ],
+      "id": "a4ed809e-e9d4-446a-af7c-67eb2fb4da37",
+      "name": "Gmail3",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "dXBIqxgevroi8xiZ",
+          "name": "Mason reed gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        768,
+        3472
+      ],
+      "id": "b3c39067-4863-4453-8cf1-b7d654433434",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8e5dfcdf-c939-4f7f-a6e1-a33ded5f1e14",
+              "name": "Biz Email",
+              "value": "={{ $json['Biz Email'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d6199bf3-2abb-4869-ae26-9956511f46d1",
+              "name": "Subject",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "6f4c7920-faa6-4f5f-a680-1853f05c35db",
+              "name": "Script",
+              "value": "={{ $json.Script }}",
+              "type": "string"
+            },
+            {
+              "id": "5a1af0aa-b335-4b30-917e-7e519d2050df",
+              "name": "Email Account",
+              "value": "={{ $json['Email Account'] }}",
+              "type": "string"
+            },
+            {
+              "id": "436b5324-e41a-414b-ae25-7b3049879557",
+              "name": "Random Num",
+              "value": "={{ Math.floor(Math.random() * (7 - 2 + 1)) + 2 }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        3488
+      ],
+      "id": "4b0588c2-3b1b-4c4c-8a94-0b1f13198f2a",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Biz Email'] }}",
+        "subject": "={{ $json.Subject }}",
+        "emailType": "text",
+        "message": "={{ $json.Script }}\n\nBest Regards,\nAnkit Rai\nCo-Founder\nRapple Media\n\nEmail: ankit.rapplemedia@gmail.com\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1616,
+        3392
+      ],
+      "id": "748ca66e-a5e3-4553-ab0f-ac63e920142f",
+      "name": "Gmail4",
+      "webhookId": "0ba5b907-9929-4e01-a508-50cefea10b2a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "kpYf2d3K6161koA4",
+          "name": "Ankit Young gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        3248
+      ],
+      "id": "dd3f529f-37f4-413a-88ad-82c35deee18e",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "content": "Key actions\n\n• A form or schedule trigger starts the workflow.\n• The workflow scrapes LinkedIn profile, company LinkedIn, last posts, and the company website using Apify.\n• A research agent checks for recent news.\n• All scraped data gets cleaned and filtered using an AI prompt.\n• Another AI generates a personalized cold email and a short outreach video script based on the research.\n• The script and screenshot of the prospect’s site go to HeyGen to generate a video.\n• The workflow keeps checking video status until it’s ready and then fetches a shareable link.\n• The video preview is formatted into HTML for emails.\n• The final output including name, email content, script, and link is saved in a Google Sheet.",
+        "height": 240,
+        "width": 800
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        -192
+      ],
+      "id": "2f646656-8ed2-4b1f-a991-e7c142b154c0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "This second workflow takes the final output from the first workflow and sends the outreach emails at scale.\n\nHow it works\n\n• A schedule trigger starts the automation every day.\n• It pulls rows from your Google Sheet where the email hasn’t been sent and is assigned to you.\n• Each row contains the prospect email, subject, and personalization from the first workflow.\n• The workflow loops through each row one by one.\n• A random time delay between messages makes sending look natural.\n• Based on the value in the Email Account column, the Switch node selects which Gmail account to use.\n• The selected Gmail node sends the outreach email with the script.\n• After sending, the Google Sheet is updated and marks the contact as Sent.",
+        "height": 256,
+        "width": 768
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1184,
+        3008
+      ],
+      "id": "53295ca0-0076-41ba-9cae-5605b81706de",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "name": "ankit",
+          "compnay_name": "Rapple Media",
+          "company_website": "https://rapplemeida.in",
+          "linkedin_url": "https://www.linkedin.com/in/ankit-rai-rapplemedia/",
+          "linkedin_company_url": "https://www.linkedin.com/company/rapple-media"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Video_ID_Value",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get_Sharable_Link",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Video_ID": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video_ID_Value": {
+      "main": [
+        [
+          {
+            "node": "Check_Video_Progress",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check_Video_Progress": {
+      "main": [
+        [
+          {
+            "node": "Extract_Video_Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract_Video_Status": {
+      "main": [
+        [
+          {
+            "node": "Evaluate_Video_Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluate_Video_Status": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Sharable_Link": {
+      "main": [
+        [
+          {
+            "node": "embed_video_html",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HeyGen Video": {
+      "main": [
+        [
+          {
+            "node": "Video_ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Website Screenshot": {
+      "main": [
+        [
+          {
+            "node": "Get Binary Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Host Image Imgbb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Binary Data": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Host Image Imgbb": {
+      "main": [
+        [
+          {
+            "node": "Generate HeyGen Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "embed_video_html": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Personalised_Email": {
+      "main": [
+        [
+          {
+            "node": "Email_Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Content Evaluation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Evaluation": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Personalised_Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email_Content": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Get Script",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Script": {
+      "main": [
+        [
+          {
+            "node": "Video details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video details": {
+      "main": [
+        [
+          {
+            "node": "Apify_API_Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify_API_Key": {
+      "main": [
+        [
+          {
+            "node": "Website Screenshot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        []
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Profile Enrichment": {
+      "main": [
+        [
+          {
+            "node": "Profile_Scraper_Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Company Enrichment": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_LinkedIn_Posts": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn_Posts_Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Industry_News_Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Profile_Scraper_Data": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "LinkedIn_Posts_Data": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Industry_News_Data": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Prospect Information": {
+      "main": [
+        [
+          {
+            "node": "Apify_API_Key1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Prospect Information",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape Website": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "website_text": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Apify_API_Key1": {
+      "main": [
+        [
+          {
+            "node": "Apify Profile Enrichment",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get_LinkedIn_Posts",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Apify Company Enrichment",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Scrape Website",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "website_text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Gmail4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail4": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "92716aef-3116-4f98-aaf7-bfe8b2252903",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "77f1d8375380ee2bc4995763b4e39528bf040d446fc3e9e5f6d802ec19784049"
+  },
+  "id": "2OH8vgcEzLejDB8w",
+  "tags": []
+}
